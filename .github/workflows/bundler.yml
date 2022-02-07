@@ -1,0 +1,27 @@
+name: CI
+
+# Trigger the workflow...
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  Test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install System Dependencies
+      run: sudo apt-get install -y libxslt-dev
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        # NOTE: we can ignore nokogiri install speed considerations in view of caching
