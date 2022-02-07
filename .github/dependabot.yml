@@ -1,0 +1,15 @@
+# See https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    # Only allow updates to Gemfile.lock, ignoring version updates that would
+    # affect the Gemfile manifest
+    versioning-strategy: lockfile-only
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
