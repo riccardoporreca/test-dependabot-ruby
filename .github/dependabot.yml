@@ -7,6 +7,8 @@ updates:
     # Only allow updates to Gemfile.lock, ignoring version updates that would
     # affect the Gemfile manifest
     versioning-strategy: lockfile-only
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
