@@ -25,3 +25,11 @@ jobs:
         ruby-version: 2.6
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
         # NOTE: we can ignore nokogiri install speed considerations in view of caching
+
+    - name: Update github-pages
+      # Keep github-pages up-to-date to ensure alignment with the live website builds
+      # NOTE: We need to change the deployment config to allow updating gems
+      run: |
+        bundle config --local deployment false
+        bundle update github-pages --jobs 4 --retry 3
+        bundle config --local deployment true
