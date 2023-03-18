@@ -32,10 +32,17 @@ jobs:
       with:
         path: .htmlproofer-cache
         key: ${{ runner.os }}-html-proofer-
+    - run: |
+        git add .htmlproofer-cache
+        git status
     - name: Test with HTMLProofer
       # see proof.rb for the fine-tuning of html-proofer
       run: |
         bundle exec htmlproofer _site --cache '{ "timeframe": { "external": "1d", "internal": "1d" }, "storage_dir": ".htmlproofer-cache" }' --log-level debug
+    - run: |
+        git status
+        git diff
+      if: always()
     - name: Save HTMLProofer cache
       uses: actions/cache/save@v3
       if: always()
