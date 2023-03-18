@@ -22,14 +22,23 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6
+        ruby-version: 3.1
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
         # NOTE: we can ignore nokogiri install speed considerations in view of caching
 
-    - name: Update github-pages
-      # Keep github-pages up-to-date to ensure alignment with the live website builds
-      # NOTE: We need to change the deployment config to allow updating gems
+    - name: Restore HTMLProofer cache
+      id: cache-htmlproofer
+      uses: actions/cache/restore@v3
+      with:
+        path: .htmlproofer-cache
+        key: ${{ runner.os }}-html-proofer-
+    - name: Test with HTMLProofer
+      # see proof.rb for the fine-tuning of html-proofer
       run: |
-        bundle config --local deployment false
-        bundle update github-pages --jobs 4 --retry 3
-        bundle config --local deployment true
+        bundle exec htmlproofer _site --cache '{ "timeframe": { "external": "1d", "internal": "1d" }, "storage_dir": ".htmlproofer-cache" }' --log-level debug
+    - name: Save HTMLProofer cache
+      uses: actions/cache/save@v3
+      if: always()
+      with:
+        path: .htmlproofer-cache
+        key: ${{ runner.os }}-html-proofer-${{ hashFiles('.htmlproofer-cache') }}
