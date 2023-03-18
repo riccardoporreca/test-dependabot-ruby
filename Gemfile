@@ -33,5 +33,5 @@ gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?
 # We are sticking to 3.16.0 since (external) links caching was broken in later
 # versions (see e.g. https://github.com/gjtorikian/html-proofer/issues/620)
 group :test do
-  gem 'html-proofer', "3.16.0"
+  gem 'html-proofer', ">=5.0.0"
 end
