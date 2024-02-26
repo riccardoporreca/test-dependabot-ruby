@@ -28,7 +28,7 @@ jobs:
 
     - name: Restore HTMLProofer cache
       id: cache-htmlproofer
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v4
       with:
         path: .htmlproofer-cache
         key: ${{ runner.os }}-html-proofer-
@@ -44,7 +44,7 @@ jobs:
         git diff
       if: always()
     - name: Save HTMLProofer cache
-      uses: actions/cache/save@v3
+      uses: actions/cache/save@v4
       if: always()
       with:
         path: .htmlproofer-cache
